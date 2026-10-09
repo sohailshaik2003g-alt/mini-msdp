@@ -23,8 +23,10 @@
 | 2026-10-09 11:45 | MSDP-R Seed 0 RL | DONE | Completed 30,000 steps in 2440.1s (12.3 sps). Peak SR = 0.400, return = -3.41. Saved `checkpoints/msdp_r_seed0_final.pt`. |
 | 2026-10-09 11:47 | Ablation: Pool Seed 0 RL | DONE | Completed 30,000 steps in 2518.1s (11.9 sps). Peak SR = 0.400, return = -3.62. Saved `checkpoints/ablation_pool_seed0_final.pt`. |
 | 2026-10-09 12:02 | Concat Seed 1 RL | DONE | Completed 30,000 steps in 1630.5s (18.4 sps). Final SR = 0.350, return = -2.91. Saved `checkpoints/concat_seed1_final.pt`. |
-| 2026-10-09 12:05 | Active Downstream RL (Seed 1 & 2) | IN PROGRESS | Running in parallel on GPU: `msdp_r` seed 1 (~48%), `ablation_pool` seed 1 (~48%), `concat` seed 2 (`task-464`). |
-| 2026-10-09 12:45 | Final Runs & Plots | UPCOMING | Launch `msdp_r` seed 2 and `ablation_pool` seed 2 to complete all 9 runs; aggregate learning curves and compile final results tables in README and REPORT. |
+| 2026-10-09 12:32 | Ablation: Pool Seed 1 RL | DONE | Completed 30,000 steps in 2606.6s (11.5 sps). Final SR = 0.350, return = -3.34. Saved `checkpoints/ablation_pool_seed1_final.pt`. |
+| 2026-10-09 12:33 | MSDP-R Seed 1 RL | DONE | Completed 30,000 steps in 2697.2s (11.1 sps). Final SR = 0.350, return = -2.99. Saved `checkpoints/msdp_r_seed1_final.pt`. |
+| 2026-10-09 12:35 | Seed 2 Execution (Final Batch) | IN PROGRESS | Running in parallel on GPU: `concat` seed 2 (~88%), `msdp_r` seed 2, `ablation_pool` seed 2. |
+| 2026-10-09 13:15 | Final Analysis & Documentation | UPCOMING | Aggregate learning curves across all 3 seeds $\times$ 3 methods with 95% CI; finalize README.md, REPORT.md, and interview answers. |
 
 ---
 
