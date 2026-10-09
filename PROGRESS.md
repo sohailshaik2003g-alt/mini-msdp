@@ -19,9 +19,10 @@
 | 2026-10-09 10:50 | State SAC Sanity Check | DONE | Completed 30k steps on CPU. Final SR = 0.300, confirming task learnability. Saved `results/figures/sanity_sac.png` and `logs/sanity_sac_seed0.csv`. |
 | 2026-10-09 11:02 | MSDP-R Pretraining | DONE | Completed all 15,000 steps in 1663.1s (9.0 steps/s) on GPU. Final loss 0.0556 (proprio=0.0542, FT=0.0010, vision=0.0004). Saved `checkpoints/pretrain_msdp_r.pt` and `results/figures/recon_msdp_r.png`. |
 | 2026-10-09 11:04 | Attention Map Visualization | DONE | Generated `results/figures/attention_maps.png` demonstrating Critic cross-attention distribution across Proprio, F/T, and 8x8 vision patches. |
-| 2026-10-09 11:05 | RL Training Batch 1 Launch | IN PROGRESS | Running Seed 0 in parallel on GPU: `msdp_r` (task-375), `concat` (task-377), `ablation_pool` (task-379). |
-| 2026-10-09 11:45 | RL Training Batches 2 & 3 | UPCOMING | Execute Seed 1 and Seed 2 for all methods. |
-| 2026-10-09 12:30 | Evaluation & Final Plots | UPCOMING | Aggregate learning curves with 95% CI across seeds; compile final results tables in README and REPORT. |
+| 2026-10-09 11:32 | Concat Seed 0 RL | DONE | Completed 30,000 steps in 1655.9s (18.1 sps). Final SR = 0.300, return = -3.21. Saved `checkpoints/concat_seed0_final.pt` and `logs/concat_seed0.csv`. |
+| 2026-10-09 11:35 | Active Downstream RL | IN PROGRESS | Running in parallel on GPU: `msdp_r` seed 0 (~78%), `ablation_pool` seed 0 (~74%), `concat` seed 1 (`task-399`). |
+| 2026-10-09 12:15 | Seed 2 Execution & Final Runs | UPCOMING | Launch remaining runs to complete 3 seeds $\times$ 3 methods. |
+| 2026-10-09 12:45 | Evaluation & Final Plots | UPCOMING | Aggregate learning curves with 95% CI across seeds; compile final results tables in README and REPORT. |
 
 ---
 
