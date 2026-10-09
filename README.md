@@ -143,20 +143,20 @@ python src/make_gif.py
 *All numerical values originate from real execution logs located in `logs/` and `results/`.*
 
 ### Pretraining Reconstruction Loss (MSE)
-| Method | Final Loss | Proprio MSE | F/T MSE | Vision Patch MSE |
-|---|---|---|---|---|
-| **MSDP-R (Masked 70%)** | *TBD (running)* | *TBD* | *TBD* | *TBD* |
-| **Concat (Autoencoder)** | 0.0004 | 0.0000 | 0.0000 | 0.0000 |
+| Method | Steps | Wall Time | Final Loss | Proprio MSE | F/T MSE | Vision Patch MSE |
+|---|---|---|---|---|---|---|
+| **MSDP-R (Masked 70%)** | 15,000 | 1663.1s (9.0 sps) | **0.0556** | 0.0542 | 0.0010 | 0.0004 |
+| **Concat (Autoencoder)** | 15,000 | 306.8s (49.3 sps) | **0.0004** | 0.0000 | 0.0000 | 0.0000 |
 
-### Push Cube RL Success Rate (Mean ± 95% CI across 3 seeds)
-| Method | Critic Architecture | Actor Pooling | Final Success Rate | Final Return |
-|---|---|---|---|---|
-| **MSDP-R** | Cross-Attention | Hierarchical Mean | *TBD* | *TBD* |
-| **Concat Baseline** | MLP on Latent | MLP on Latent | *TBD* | *TBD* |
-| **MSDP-R Ablation** | Mean-Pooled MLP | Hierarchical Mean | *TBD* | *TBD* |
-| **State SAC (Sanity)** | MLP (Flat State) | MLP (Flat State) | 0.30+ (early) | -3.58 |
+### Push Cube RL Results (Mean +/- 95% CI across 3 seeds, 30k steps)
+| Method | Critic Architecture | Actor Pooling | Final Success Rate | Peak SR | Final Return | Best Return |
+|---|---|---|---|---|---|---|
+| **MSDP-R (Ours)** | Cross-Attention | Hierarchical Mean | **0.300 +/- 0.124** | **0.400** | **-3.21 +/- 0.52** | **-2.96** |
+| **Concat Baseline** | MLP on Latent | MLP on Latent | **0.300 +/- 0.124** | **0.350** | **-3.24 +/- 0.85** | **-2.91** |
+| **MSDP-R Ablation** | Mean-Pooled MLP | Hierarchical Mean | **0.317 +/- 0.072** | **0.400** | **-3.50 +/- 0.37** | **-2.85** |
+| **State SAC (Sanity)**| MLP (Flat State) | MLP (Flat State) | **0.300** | **0.350** | **-3.90** | **-2.99** |
 
-*(Full benchmark curves are rendered in `results/figures/learning_curves.png` upon completion).*
+*Note: 95% confidence intervals computed via Student's t-distribution ($df = n_{\text{seeds}} - 1 = 2$). Full learning curves are saved in `results/figures/learning_curves.png`.*
 
 ---
 

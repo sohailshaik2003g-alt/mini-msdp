@@ -136,7 +136,7 @@ def plot_learning_curves(log_dir: str = 'logs', out_dir: str = 'results/figures'
 def print_results_table(log_dir: str = 'logs'):
     """Print final performance table."""
     print("\n" + "=" * 70)
-    print("RESULTS TABLE (final eval, mean ± 95% CI across seeds)")
+    print("RESULTS TABLE (final eval, mean +/- 95% CI across seeds)")
     print("=" * 70)
     print(f"{'Method':<20} {'Seeds':<6} {'Success Rate':>14} {'Mean Return':>14}")
     print("-" * 70)
