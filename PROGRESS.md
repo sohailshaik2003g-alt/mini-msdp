@@ -15,13 +15,13 @@
 | 2026-10-09 10:28 | Unit Testing | DONE | 27 pytest unit tests passing (`tests/test_all.py`), validating obs shapes, reset determinism, FT on contact, masking ratio (~70%), vision patch constraint, frozen encoder gradients, and actor stop-gradient. |
 | 2026-10-09 10:33 | Benchmark & Compute Plan | DONE | Measured initial throughput (~1800 env steps/s, ~11.6 pretrain iter/s). Reduced pretrain steps from 30k to 15k to fit budget. Wrote initial `COMPUTE_PLAN.md`. |
 | 2026-10-09 10:34 | Random Policy Media | DONE | Generated `media/random_policy.gif` (60 frames) showing environment interaction. |
-| 2026-10-09 10:35 | Pretraining Launched | IN PROGRESS | Concat baseline finished (306.8s, loss 0.0004, `checkpoints/pretrain_concat.pt`, `results/figures/recon_concat.png`). MSDP-R in progress (~55% complete). |
+| 2026-10-09 10:40 | Concat Baseline Pretraining | DONE | Completed 15,000 steps in 306.8s (49.3 steps/s) on GPU. Final loss 0.0004. Saved `checkpoints/pretrain_concat.pt` and `results/figures/recon_concat.png`. |
 | 2026-10-09 10:50 | State SAC Sanity Check | DONE | Completed 30k steps on CPU. Final SR = 0.300, confirming task learnability. Saved `results/figures/sanity_sac.png` and `logs/sanity_sac_seed0.csv`. |
-| 2026-10-09 10:45 | RL Smoke-Testing | DONE | Fixed Windows console cp1252 unicode crash (`\u03b1` -> `alpha`). Measured downstream RL throughput at 17.3 sps. Validated evaluation loop and checkpointing. |
-| 2026-10-09 10:47 | Compute Budget Update | DONE | Updated `COMPUTE_PLAN.md` with measured 17.3 sps; adjusted RL horizon to 30,000 steps per run across 3 seeds to fit within 4-hour budget without exceeding time limits. |
-| 2026-10-09 10:48 | Documentation & Scripts | DONE | Created `src/visualize_attention.py`, updated `src/plot_results.py`, drafted comprehensive `README.md` and `REPORT.md`. |
-| 2026-10-09 11:00 | Downstream RL Training | UPCOMING | Launch 3 methods × 3 seeds (MSDP-R, Concat, Ablation). |
-| 2026-10-09 12:30 | Evaluation & Final Plots | UPCOMING | Aggregate learning curves with 95% CI across seeds; generate attention heatmaps. |
+| 2026-10-09 11:02 | MSDP-R Pretraining | DONE | Completed all 15,000 steps in 1663.1s (9.0 steps/s) on GPU. Final loss 0.0556 (proprio=0.0542, FT=0.0010, vision=0.0004). Saved `checkpoints/pretrain_msdp_r.pt` and `results/figures/recon_msdp_r.png`. |
+| 2026-10-09 11:04 | Attention Map Visualization | DONE | Generated `results/figures/attention_maps.png` demonstrating Critic cross-attention distribution across Proprio, F/T, and 8x8 vision patches. |
+| 2026-10-09 11:05 | RL Training Batch 1 Launch | IN PROGRESS | Running Seed 0 in parallel on GPU: `msdp_r` (task-375), `concat` (task-377), `ablation_pool` (task-379). |
+| 2026-10-09 11:45 | RL Training Batches 2 & 3 | UPCOMING | Execute Seed 1 and Seed 2 for all methods. |
+| 2026-10-09 12:30 | Evaluation & Final Plots | UPCOMING | Aggregate learning curves with 95% CI across seeds; compile final results tables in README and REPORT. |
 
 ---
 
