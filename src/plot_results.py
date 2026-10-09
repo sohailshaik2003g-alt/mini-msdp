@@ -30,7 +30,14 @@ def load_method_logs(method: str, log_dir: str = 'logs') -> dict[int, dict]:
     files = glob.glob(pattern)
     seed_data = {}
     for f in files:
-        seed = int(os.path.basename(f).split('seed')[1].split('.')[0])
+        # Ignore test seeds (like seed99)
+        basename = os.path.basename(f)
+        try:
+            seed = int(basename.split('seed')[1].split('.')[0])
+        except ValueError:
+            continue
+        if seed >= 10:  # test seeds
+            continue
         steps, sr, mr = [], [], []
         with open(f) as fp:
             reader = csv.DictReader(fp)
@@ -38,17 +45,19 @@ def load_method_logs(method: str, log_dir: str = 'logs') -> dict[int, dict]:
                 steps.append(int(row['step']))
                 sr.append(float(row['success_rate']))
                 mr.append(float(row['mean_return']))
-        seed_data[seed] = {'steps': steps, 'success_rate': sr, 'mean_return': mr}
+        if len(steps) >= 2:
+            seed_data[seed] = {'steps': steps, 'success_rate': sr, 'mean_return': mr}
     return seed_data
 
 
 def interpolate_to_common_steps(seed_data: dict, n_points: int = 20) -> tuple:
     """Interpolate all seeds to common step axis."""
-    if not seed_data:
+    valid_data = {k: v for k, v in seed_data.items() if len(v['steps']) >= 2}
+    if not valid_data:
         return np.array([]), np.array([]), np.array([])
 
     all_steps = []
-    for d in seed_data.values():
+    for d in valid_data.values():
         all_steps.extend(d['steps'])
     step_min = min(all_steps)
     step_max = max(all_steps)
@@ -56,7 +65,7 @@ def interpolate_to_common_steps(seed_data: dict, n_points: int = 20) -> tuple:
 
     sr_interp = []
     mr_interp = []
-    for d in seed_data.values():
+    for d in valid_data.values():
         s = np.array(d['steps'])
         sr = np.interp(common_steps, s, d['success_rate'])
         mr = np.interp(common_steps, s, d['mean_return'])
@@ -153,7 +162,7 @@ def print_results_table(log_dir: str = 'logs'):
         sr_mean, sr_ci = float(sr_arr.mean()), (stats.t.ppf(0.975, df=max(n-1,1)) * sr_arr.std(ddof=min(1,n-1)) / np.sqrt(n) if n > 1 else 0)
         mr_mean, mr_ci = float(mr_arr.mean()), (stats.t.ppf(0.975, df=max(n-1,1)) * mr_arr.std(ddof=min(1,n-1)) / np.sqrt(n) if n > 1 else 0)
 
-        print(f"{label:<20} {n:<6} {sr_mean:>7.3f} ±{sr_ci:>5.3f}  {mr_mean:>7.2f} ±{mr_ci:>5.2f}")
+        print(f"{label:<20} {n:<6} {sr_mean:>7.3f} +/-{sr_ci:>5.3f}  {mr_mean:>7.2f} +/-{mr_ci:>5.2f}")
 
     print("=" * 70)
     print("\nNote: 3 seeds (paper: 12), 100k steps (paper: 500k), mock env (paper: PyBullet/panda-gym)")
