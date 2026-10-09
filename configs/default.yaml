@@ -1,0 +1,51 @@
+# MSDP Mini - Default Configuration
+# All hyperparameters here match the paper (Sec. V-A) unless noted.
+# See DEVIATIONS.md for documented differences.
+
+env:
+  type: "multisensory"     # 'multisensory' or 'state'
+  img_h: 64
+  img_w: 64
+  n_ft_steps: 4
+  randomise_dynamics: true
+
+pretrain:
+  n_transitions: 30000     # random-policy data to collect
+  n_steps: 15000           # DEVIATION D_PRETRAIN1: reduced from 30k (43 min) to 15k (22 min) on GTX 1650
+  batch_size: 64
+  lr: 3.0e-4
+  mask_ratio: 0.70         # fraction of tokens masked
+  save_path: "checkpoints/pretrain_{method}.pt"
+  recon_figure_path: "results/figures/recon_{method}.png"
+
+rl:
+  total_steps: 30000       # (paper: 500k) DEVIATION D1 (measured 17.3 sps on GTX 1650)
+  eval_every: 2500
+  eval_episodes: 20
+  batch_size: 64
+  lr: 3.0e-4
+  gamma: 0.99
+  tau: 0.005
+  alpha_init: 0.1
+  buffer_capacity: 100000
+  warmup_steps: 1000       # random actions before training starts
+  checkpoint_every: 10000
+  log_path: "logs/{method}_seed{seed}.csv"
+  save_path: "checkpoints/{method}_seed{seed}_final.pt"
+
+model:
+  d_model: 128
+  n_heads: 4
+  n_layers_enc: 2
+  n_layers_dec: 2
+  mlp_ratio: 2
+  n_vision_tokens: 64
+  n_proprio_tokens: 1
+  n_ft_tokens: 1
+
+seeds: [0, 1, 2]           # 3 seeds (paper: 12) DEVIATION D2
+
+# Methods to run: 'msdp_r', 'concat', 'ablation_pool', 'ablation_cls'
+methods: ['msdp_r', 'concat']
+
+device: "cuda"             # falls back to cpu if not available
